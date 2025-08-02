@@ -140,7 +140,6 @@ export class Intersection {
 
     drawIntersection(ctx) {
         // Draw intersection as a simple square (curved corners)
-       drawIntersection(ctx) {
     const halfRoad = this.roadWidth / 2;
     const radius = 20; // Curve radius — you can adjust this value
 
@@ -167,7 +166,7 @@ export class Intersection {
 
     ctx.closePath();
     ctx.fill();
-}
+    }
 
 
     drawLaneMarkings(ctx) {
