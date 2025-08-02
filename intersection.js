@@ -139,17 +139,36 @@ export class Intersection {
     }
 
     drawIntersection(ctx) {
-        // Draw intersection as a simple square (straight corners)
-        const halfRoad = this.roadWidth / 2;
-        
-        ctx.fillStyle = '#444444';
-        ctx.fillRect(
-            this.centerX - halfRoad,
-            this.centerY - halfRoad,
-            this.roadWidth,
-            this.roadWidth
-        );
-    }
+        // Draw intersection as a simple square (curved corners)
+       drawIntersection(ctx) {
+    const halfRoad = this.roadWidth / 2;
+    const radius = 20; // Curve radius — you can adjust this value
+
+    const left = this.centerX - halfRoad;
+    const right = this.centerX + halfRoad;
+    const top = this.centerY - halfRoad;
+    const bottom = this.centerY + halfRoad;
+
+    ctx.fillStyle = '#444444';
+    ctx.beginPath();
+    ctx.moveTo(left + radius, top);
+
+    ctx.lineTo(right - radius, top);
+    ctx.arcTo(right, top, right, top + radius, radius);
+
+    ctx.lineTo(right, bottom - radius);
+    ctx.arcTo(right, bottom, right - radius, bottom, radius);
+
+    ctx.lineTo(left + radius, bottom);
+    ctx.arcTo(left, bottom, left, bottom - radius, radius);
+
+    ctx.lineTo(left, top + radius);
+    ctx.arcTo(left, top, left + radius, top, radius);
+
+    ctx.closePath();
+    ctx.fill();
+}
+
 
     drawLaneMarkings(ctx) {
         ctx.strokeStyle = '#ffffff';
