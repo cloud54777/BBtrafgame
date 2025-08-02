@@ -1,7 +1,6 @@
 import { GameEngine } from './gameEngine.js';
 import { UIController } from './ui.js';
 import { CONFIG } from './config.js';
-import { turnPaths } from './turnPaths.js';
 
 class TrafficSimulator {
     constructor() {
