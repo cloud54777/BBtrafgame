@@ -1,4 +1,3 @@
-
 /* ######################################################################
 Source code for the interactive Javascript simulation at traffic-simulation.de
 
@@ -1746,8 +1745,4 @@ function setBasicConflicts(nLanes_main,nLanes_sec){
 
 
 }
-
-
-
-
 
