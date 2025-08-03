@@ -132,7 +132,7 @@ export class Intersection {
             }
         }
     }
-    drawRoads(ctx) {
+drawRoads(ctx) {
         const halfRoad = this.roadWidth / 2;
         
         // Draw concrete/asphalt roads
@@ -172,22 +172,32 @@ export class Intersection {
     }
 
     drawIntersection(ctx) {
-        // Draw intersection with rounded corners like in the image
-        const halfRoad = this.roadWidth / 2;
-        const cornerRadius = 15;
-        
-        ctx.fillStyle = '#666666';
-        
-        // Draw intersection with rounded corners
+        // Draw starfish-style intersection with 4 arms and curvy indented corners
+        const cx = this.centerX;
+        const cy = this.centerY;
+        const armLength = this.roadWidth * 0.9;
+        const armWidth = this.roadWidth;
+        const curveRadius = this.roadWidth * 0.45;
+        ctx.save();
         ctx.beginPath();
-        ctx.roundRect(
-            this.centerX - halfRoad,
-            this.centerY - halfRoad,
-            this.roadWidth,
-            this.roadWidth,
-            cornerRadius
-        );
+        // TOP ARM
+        ctx.moveTo(cx, cy - armLength);
+        ctx.quadraticCurveTo(cx + curveRadius, cy - curveRadius, cx + armWidth / 2, cy - armWidth / 2);
+        // RIGHT ARM
+        ctx.lineTo(cx + armLength, cy - armWidth / 2);
+        ctx.lineTo(cx + armLength, cy + armWidth / 2);
+        ctx.lineTo(cx + armWidth / 2, cy + armWidth / 2);
+        ctx.quadraticCurveTo(cx + curveRadius, cy + curveRadius, cx, cy + armLength);
+        // BOTTOM ARM
+        ctx.quadraticCurveTo(cx - curveRadius, cy + curveRadius, cx - armWidth / 2, cy + armWidth / 2);
+        ctx.lineTo(cx - armLength, cy + armWidth / 2);
+        ctx.lineTo(cx - armLength, cy - armWidth / 2);
+        ctx.lineTo(cx - armWidth / 2, cy - armWidth / 2);
+        ctx.quadraticCurveTo(cx - curveRadius, cy - curveRadius, cx, cy - armLength);
+        ctx.closePath();
+        ctx.fillStyle = '#666666';
         ctx.fill();
+        ctx.restore();
     }
 
     drawLaneMarkings(ctx) {
@@ -277,7 +287,7 @@ export class Intersection {
         ctx.fillText('↑→', 0, 0);
         ctx.restore();
     }
-    drawStopLines(ctx) {
+drawStopLines(ctx) {
         ctx.strokeStyle = '#ffffff'; // White stop lines
         ctx.lineWidth = 4;
         
