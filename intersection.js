@@ -172,49 +172,45 @@ drawRoads(ctx) {
     }
 
     drawIntersection(ctx) {
-        // Draw intersection with curved inward corners where roads meet
-        const cx = this.centerX;
-        const cy = this.centerY;
+        // Draw intersection center with curved inward corners
         const halfRoad = this.roadWidth / 2;
-        const curveRadius = this.roadWidth * 0.3; // Larger curve for more pronounced inward bend
+        const cornerRadius = 20; // Radius for the inward curves
         
-        ctx.save();
+        ctx.fillStyle = '#666666';
         ctx.beginPath();
         
-        // Start from top-left corner and work clockwise
-        // Top-left corner with inward curve
-        ctx.moveTo(cx - halfRoad, cy - halfRoad);
-        ctx.quadraticCurveTo(cx - curveRadius, cy - halfRoad, cx - curveRadius, cy - curveRadius);
-        ctx.quadraticCurveTo(cx - halfRoad, cy - curveRadius, cx - halfRoad, cy - halfRoad);
+        // Start from top-left and create curved corners
+        // Top-left corner (inward curve)
+        ctx.moveTo(this.centerX - halfRoad + cornerRadius, this.centerY - halfRoad);
+        ctx.arcTo(this.centerX - halfRoad, this.centerY - halfRoad, 
+                  this.centerX - halfRoad, this.centerY - halfRoad + cornerRadius, cornerRadius);
         
-        // Top edge to top-right corner
-        ctx.lineTo(cx + halfRoad, cy - halfRoad);
+        // Left edge
+        ctx.lineTo(this.centerX - halfRoad, this.centerY + halfRoad - cornerRadius);
         
-        // Top-right corner with inward curve
-        ctx.quadraticCurveTo(cx + curveRadius, cy - halfRoad, cx + curveRadius, cy - curveRadius);
-        ctx.quadraticCurveTo(cx + halfRoad, cy - curveRadius, cx + halfRoad, cy - halfRoad);
+        // Bottom-left corner (inward curve)
+        ctx.arcTo(this.centerX - halfRoad, this.centerY + halfRoad,
+                  this.centerX - halfRoad + cornerRadius, this.centerY + halfRoad, cornerRadius);
         
-        // Right edge to bottom-right corner
-        ctx.lineTo(cx + halfRoad, cy + halfRoad);
+        // Bottom edge
+        ctx.lineTo(this.centerX + halfRoad - cornerRadius, this.centerY + halfRoad);
         
-        // Bottom-right corner with inward curve
-        ctx.quadraticCurveTo(cx + curveRadius, cy + halfRoad, cx + curveRadius, cy + curveRadius);
-        ctx.quadraticCurveTo(cx + halfRoad, cy + curveRadius, cx + halfRoad, cy + halfRoad);
+        // Bottom-right corner (inward curve)
+        ctx.arcTo(this.centerX + halfRoad, this.centerY + halfRoad,
+                  this.centerX + halfRoad, this.centerY + halfRoad - cornerRadius, cornerRadius);
         
-        // Bottom edge to bottom-left corner
-        ctx.lineTo(cx - halfRoad, cy + halfRoad);
+        // Right edge
+        ctx.lineTo(this.centerX + halfRoad, this.centerY - halfRoad + cornerRadius);
         
-        // Bottom-left corner with inward curve
-        ctx.quadraticCurveTo(cx - curveRadius, cy + halfRoad, cx - curveRadius, cy + curveRadius);
-        ctx.quadraticCurveTo(cx - halfRoad, cy + curveRadius, cx - halfRoad, cy + halfRoad);
+        // Top-right corner (inward curve)
+        ctx.arcTo(this.centerX + halfRoad, this.centerY - halfRoad,
+                  this.centerX + halfRoad - cornerRadius, this.centerY - halfRoad, cornerRadius);
         
-        // Left edge back to start
-        ctx.lineTo(cx - halfRoad, cy - halfRoad);
+        // Top edge back to start
+        ctx.lineTo(this.centerX - halfRoad + cornerRadius, this.centerY - halfRoad);
         
         ctx.closePath();
-        ctx.fillStyle = '#666666';
         ctx.fill();
-        ctx.restore();
     }
 
     drawLaneMarkings(ctx) {
