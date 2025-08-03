@@ -177,7 +177,7 @@ drawRoads(ctx) {
         const cy = this.centerY;
         const armLength = this.roadWidth * 0.9;
         const armWidth = this.roadWidth;
-        const curveRadius = this.roadWidth * 0.45;
+        const curveRadius = this.roadWidth * 0.100;
         ctx.save();
         ctx.beginPath();
         // TOP ARM
