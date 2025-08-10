@@ -3,6 +3,7 @@ import { TrafficLightController } from './trafficLights.js';
 import { CarManager } from './cars.js';
 import { SensorSystem } from './sensors.js';
 import { Statistics } from './statistics.js';
+import { RoadSystem } from './road.js';
 import { CONFIG } from './config.js';
 
 export class GameEngine {
@@ -12,6 +13,7 @@ export class GameEngine {
         
         // Game components
         this.intersection = new Intersection(canvas.width / 2, canvas.height / 2);
+        this.roadSystem = new RoadSystem(canvas.width / 2, canvas.height / 2);
         this.trafficLights = new TrafficLightController();
         this.carManager = new CarManager(this.intersection);
         this.sensorSystem = new SensorSystem(this.intersection);
@@ -66,6 +68,9 @@ export class GameEngine {
         
         // Render intersection
         this.intersection.render(this.ctx);
+        
+        // Render trajectory paths (for debugging - can be disabled)
+        // this.roadSystem.renderTrajectories(this.ctx);
         
         // Render sensor detection zones (for adaptive mode)
         if (this.mode === CONFIG.MODES.ADAPTIVE) {
@@ -130,5 +135,9 @@ export class GameEngine {
 
     getSettings() {
         return { ...this.settings };
+    }
+
+    getRoadSystem() {
+        return this.roadSystem;
     }
 }
