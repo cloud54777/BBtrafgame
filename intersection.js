@@ -172,54 +172,54 @@ drawRoads(ctx) {
     }
 
     drawIntersection(ctx) {
-        // Draw intersection center with curved inward corners
-        const halfRoad = this.roadWidth / 2;
-        const cornerRadius = 20; // Radius for the inward curves
-        
-        ctx.fillStyle = '#666666';
-        ctx.beginPath();
-        
-        // Start from top-left and create curved corners
-        // Top-left corner (inward curve)
-        ctx.moveTo(this.centerX - halfRoad + cornerRadius, this.centerY - halfRoad);
-        ctx.arcTo(this.centerX - halfRoad, this.centerY - halfRoad, 
-                  this.centerX - halfRoad, this.centerY - halfRoad + cornerRadius, cornerRadius);
-        
-        // Left edge
-        ctx.lineTo(this.centerX - halfRoad, this.centerY + halfRoad - cornerRadius);
-        
-        // Bottom-left corner (inward curve)
-        ctx.arcTo(this.centerX - halfRoad, this.centerY + halfRoad,
-                  this.centerX - halfRoad + cornerRadius, this.centerY + halfRoad, cornerRadius);
-        
-        // Bottom edge
-        ctx.lineTo(this.centerX + halfRoad - cornerRadius, this.centerY + halfRoad);
-        
-        // Bottom-right corner (inward curve)
-        ctx.arcTo(this.centerX + halfRoad, this.centerY + halfRoad,
-                  this.centerX + halfRoad, this.centerY + halfRoad - cornerRadius, cornerRadius);
-        
-        // Right edge
-        ctx.lineTo(this.centerX + halfRoad, this.centerY - halfRoad + cornerRadius);
-        
-        // Top-right corner (inward curve)
-        ctx.arcTo(this.centerX + halfRoad, this.centerY - halfRoad,
-                  this.centerX + halfRoad - cornerRadius, this.centerY - halfRoad, cornerRadius);
-        
-        // Top edge back to start
-        ctx.lineTo(this.centerX - halfRoad + cornerRadius, this.centerY - halfRoad);
-        
-        ctx.closePath();
-        ctx.fill();
-    }
+    const halfRoad = this.roadWidth / 2;
+    const curveRadius = halfRoad; // Makes the inward curve meet nicely
 
-    drawLaneMarkings(ctx) {
-        ctx.strokeStyle = '#ffff00'; // Yellow lane markings
-        ctx.lineWidth = 2;
-        ctx.setLineDash([10, 10]);
+    ctx.fillStyle = '#666666';
+    ctx.beginPath();
 
-        const halfRoad = this.roadWidth / 2;
-        
+    // Start top middle going clockwise
+    ctx.moveTo(this.centerX - halfRoad, this.centerY - halfRoad - curveRadius);
+
+    // Top left inward curve
+    ctx.quadraticCurveTo(
+        this.centerX - halfRoad, this.centerY - halfRoad,
+        this.centerX - halfRoad - curveRadius, this.centerY - halfRoad
+    );
+
+    // Left top to left bottom
+    ctx.lineTo(this.centerX - halfRoad - curveRadius, this.centerY + halfRoad);
+
+    // Bottom left inward curve
+    ctx.quadraticCurveTo(
+        this.centerX - halfRoad, this.centerY + halfRoad,
+        this.centerX - halfRoad, this.centerY + halfRoad + curveRadius
+    );
+
+    // Bottom middle to bottom right
+    ctx.lineTo(this.centerX + halfRoad, this.centerY + halfRoad + curveRadius);
+
+    // Bottom right inward curve
+    ctx.quadraticCurveTo(
+        this.centerX + halfRoad, this.centerY + halfRoad,
+        this.centerX + halfRoad + curveRadius, this.centerY + halfRoad
+    );
+
+    // Right bottom to right top
+    ctx.lineTo(this.centerX + halfRoad + curveRadius, this.centerY - halfRoad);
+
+    // Top right inward curve
+    ctx.quadraticCurveTo(
+        this.centerX + halfRoad, this.centerY - halfRoad,
+        this.centerX + halfRoad, this.centerY - halfRoad - curveRadius
+    );
+
+    // Back to start
+    ctx.closePath();
+    ctx.fill();
+}
+
+
         // Vertical center line (North-South road)
         ctx.beginPath();
         ctx.moveTo(this.centerX, 0);
