@@ -219,7 +219,13 @@ drawRoads(ctx) {
     ctx.fill();
 }
 
+    drawLaneMarkings(ctx) {
+        ctx.strokeStyle = '#ffffff';
+        ctx.lineWidth = 2;
+        ctx.setLineDash([10, 10]);
 
+        const halfRoad = this.roadWidth / 2;
+        
         // Vertical center line (North-South road)
         ctx.beginPath();
         ctx.moveTo(this.centerX, 0);
@@ -240,6 +246,7 @@ drawRoads(ctx) {
         this.drawLaneArrows(ctx);
         
         ctx.setLineDash([]);
+    }
     }
 
     drawLaneArrows(ctx) {
